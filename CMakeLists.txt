@@ -13,8 +13,9 @@ endif()
 ## find packages ##
 ###################
 find_package(catkin REQUIRED COMPONENTS roscpp cv_bridge image_transport sensor_msgs std_msgs
-        cmake_modules dynamic_reconfigure message_generation stargazer rosbag nodelet tf2 tf2_geometry_msgs)
-find_package(Ceres REQUIRED)
+        cmake_modules dynamic_reconfigure message_generation stargazer rosbag nodelet tf2 tf2_geometry_msgs 
+        ceres_catkin)
+#find_package(Ceres REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(Boost REQUIRED)
 
@@ -48,7 +49,7 @@ catkin_package(
 include_directories(
     ${Eigen_INCLUDE_DIRS}
     ${catkin_INCLUDE_DIRS}
-    ${CERES_INCLUDE_DIRS}
+#    ${CERES_INCLUDE_DIRS}
     )
 
 add_subdirectory(src/landmark_calibrator)
