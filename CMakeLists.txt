@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.10.2)
+set(CMAKE_CXX_STANDARD 14)
+#cmake_minimum_required(VERSION 2.8.12)
 project(stargazer_ros_tool)
 
 include(CheckCXXCompilerFlag)
@@ -13,8 +15,8 @@ endif()
 ## find packages ##
 ###################
 find_package(catkin REQUIRED COMPONENTS roscpp cv_bridge image_transport sensor_msgs std_msgs
-        cmake_modules dynamic_reconfigure message_generation stargazer rosbag nodelet tf2 tf2_geometry_msgs 
-        ceres_catkin)
+        cmake_modules dynamic_reconfigure message_generation stargazer rosbag nodelet tf2 tf2_geometry_msgs ceres_catkin glog_catkin)
+
 #find_package(Ceres REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(Boost REQUIRED)
