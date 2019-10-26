@@ -8,15 +8,13 @@ namespace stargazer_ros_tool {
 
 struct LandmarkFinderInterfaceParameters {
 
-    using Config = LandmarkFinderConfig;
-
     void fromNodeHandle(const ros::NodeHandle&);
-    void fromConfig(const Config&, const uint32_t& = 0);
+    void fromConfig(const LandmarkFinderConfig&, const uint32_t& = 0);
 
     std::string map_config;
     std::string landmark_topic;
     std::string undistorted_image_topic;
 
-    Config cfg;
+    LandmarkFinderConfig cfg;
 };
 }

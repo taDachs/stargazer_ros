@@ -22,7 +22,7 @@ void LandmarkFinderInterfaceParameters::fromNodeHandle(const ros::NodeHandle& nh
     getParam(nh, "debug_mode", cfg.debug_mode);
 }
 
-void LandmarkFinderInterfaceParameters::fromConfig(const Config& config, const uint32_t&) {
+void LandmarkFinderInterfaceParameters::fromConfig(const LandmarkFinderConfig& config, const uint32_t&) {
     cfg = config;
 }
 }
