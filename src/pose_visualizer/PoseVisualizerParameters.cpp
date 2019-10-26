@@ -12,7 +12,8 @@ PoseVisualizerParameters& PoseVisualizerParameters::getInstance() {
 void PoseVisualizerParameters::fromNodeHandle(const ros::NodeHandle& node_handle) {
 
     getParam(node_handle, "bag_file", bag_file);
-    getParam(node_handle, "stargazer_config", stargazer_config);
+    getParam(node_handle, "cam_config", cam_config);
+    getParam(node_handle, "map_config", map_config);
     getParam(node_handle, "map_frame", map_frame);
     getParam(node_handle, "camera_frame", camera_frame);
     getParam(node_handle, "landmark_topic", landmark_topic);

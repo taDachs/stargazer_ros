@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
 
     ros::Publisher path_pub = n.advertise<geometry_msgs::PoseArray>(params.pose_pub_topic, 1);
     std::unique_ptr<stargazer::CeresLocalizer> localizer =
-        std::make_unique<stargazer::CeresLocalizer>(params.stargazer_config);
+        std::make_unique<stargazer::CeresLocalizer>(params.cam_config, params.map_config);
 
     geometry_msgs::PoseArray pose_array;
 

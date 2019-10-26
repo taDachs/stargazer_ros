@@ -1,0 +1,10 @@
+threshold: 140
+tight_filter_size: 3
+wide_filter_size: 31
+maxRadiusForPixelCluster: 3
+minPixelForCluster: 1
+maxPixelForCluster: 1000
+maxRadiusForCluster: 40
+minPointsPerLandmark: 5
+maxPointsPerLandmark: 9
+

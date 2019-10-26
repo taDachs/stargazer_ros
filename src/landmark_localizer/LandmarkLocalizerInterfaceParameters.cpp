@@ -5,8 +5,8 @@
 namespace stargazer_ros_tool {
 
 void LandmarkLocalizerInterfaceParameters::fromNodeHandle(const ros::NodeHandle& node_handle) {
-
-    getParam(node_handle, "stargazer_config", stargazer_config);
+    getParam(node_handle, "cam_config", cam_config);
+    getParam(node_handle, "map_config", map_config);
     getParam(node_handle, "landmark_topic", landmark_topic);
     getParam(node_handle, "pose_topic", pose_topic);
     getParam(node_handle, "map_frame", map_frame);

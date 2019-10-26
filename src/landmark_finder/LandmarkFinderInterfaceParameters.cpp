@@ -6,7 +6,7 @@ namespace stargazer_ros_tool {
 
 void LandmarkFinderInterfaceParameters::fromNodeHandle(const ros::NodeHandle& nh) {
 
-    getParam(nh, "stargazer_config", stargazer_config);
+    getParam(nh, "map_config", map_config);
     getParam(nh, "landmark_topic", landmark_topic);
     getParam(nh, "undistorted_image_topic", undistorted_image_topic);
 

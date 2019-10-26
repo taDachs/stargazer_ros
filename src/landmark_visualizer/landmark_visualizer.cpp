@@ -19,11 +19,10 @@ int main(int argc, char** argv) {
 
     /* Read in data */
     landmark_map_t landmarks;
-    camera_params_t camera_intrinsics;
     LandmarkVisualizerParameters& params = LandmarkVisualizerParameters::getInstance();
     params.fromNodeHandle(np);
 
-    readConfig(params.stargazer_config, camera_intrinsics, landmarks);
+    readMapConfig(params.map_config, landmarks);
 
     ros::Publisher lm_pub = n.advertise<visualization_msgs::MarkerArray>(params.landmark_topic, 1);
     tf2_ros::TransformBroadcaster transformBroadcaster;

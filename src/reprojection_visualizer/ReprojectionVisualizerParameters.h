@@ -11,7 +11,8 @@ struct ReprojectionVisualizerParameters {
 
     void fromNodeHandle(const ros::NodeHandle&);
 
-    std::string stargazer_config;
+    std::string cam_config;
+    std::string map_config;
     std::string bag_file;
     std::string landmark_topic;
     std::string img_topic;

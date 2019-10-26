@@ -10,7 +10,7 @@ LandmarkFinderInterface::LandmarkFinderInterface(ros::NodeHandle nh_public,
         : img_trans{nh_public}, server{nh_private} {
 
     params_.fromNodeHandle(nh_private);
-    landmarkFinder = std::make_unique<stargazer::LandmarkFinder>(params_.stargazer_config);
+    landmarkFinder = std::make_unique<stargazer::LandmarkFinder>(params_.map_config);
     server.setCallback(boost::bind(&LandmarkFinderInterface::reconfigureCallback, this, _1, _2));
     lm_pub = nh_private.advertise<stargazer_ros_tool::LandmarkArray>(params_.landmark_topic, 1);
     img_sub = img_trans.subscribe(

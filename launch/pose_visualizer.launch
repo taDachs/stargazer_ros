@@ -3,7 +3,8 @@
   <!-- Default values -->
   <arg name="start_rviz" default="true"/>
   <arg name="bag_file" default="$(find stargazer_ros_tool)/res/Stargazer.bag_optimized.bag"/>
-  <arg name="stargazer_config" default="$(find stargazer_ros_tool)/res/stargazer.yaml"/>
+  <arg name="cam_config" default="$(find stargazer_ros_tool)/param/cam.yaml"/>
+  <arg name="map_config" default="$(find stargazer_ros_tool)/param/map.yaml"/>
   <arg name="map_frame" default="world"/>
   <arg name="camera_frame" default="camera"/>
   <arg name="pose_topic" default="/stargazer/camera_pose"/>
@@ -15,7 +16,8 @@
   <node pkg="stargazer_ros_tool" type="pose_visualizer" name="$(anon pose_visualizer)" output="screen" required="true">
 
     <param name="bag_file" value="$(arg bag_file)"/>
-    <param name="stargazer_config" value="$(arg stargazer_config)"/>
+    <param name="cam_config" value="$(arg cam_config)"/>
+    <param name="map_config" value="$(arg map_config)"/>
     <param name="map_frame" value="$(arg map_frame)"/>
     <param name="camera_frame" value="$(arg camera_frame)"/>
     <param name="landmark_topic" value="$(arg landmark_topic)"/>

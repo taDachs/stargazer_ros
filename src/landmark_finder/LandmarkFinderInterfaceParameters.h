@@ -13,7 +13,7 @@ struct LandmarkFinderInterfaceParameters {
     void fromNodeHandle(const ros::NodeHandle&);
     void fromConfig(const Config&, const uint32_t& = 0);
 
-    std::string stargazer_config;
+    std::string map_config;
     std::string landmark_topic;
     std::string undistorted_image_topic;
 

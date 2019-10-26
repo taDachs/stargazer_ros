@@ -9,7 +9,8 @@ struct LandmarkLocalizerInterfaceParameters {
 
     void fromNodeHandle(const ros::NodeHandle&);
 
-    std::string stargazer_config;
+    std::string cam_config;
+    std::string map_config;
     std::string map_frame;
     std::string camera_frame;
     std::string landmark_topic;

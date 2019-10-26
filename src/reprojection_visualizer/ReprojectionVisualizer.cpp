@@ -43,7 +43,8 @@ ReprojectionVisualizer::ReprojectionVisualizer(ros::NodeHandle node_handle, ros:
 
     // Set parameters
     params_.fromNodeHandle(private_node_handle);
-    readConfig(params_.stargazer_config, camera_intrinsics, landmarks);
+    readCamConfig(params_.cam_config, camera_intrinsics);
+    readMapConfig(params_.map_config, landmarks);
 
     // Convert landmark points to worldcoordinates once.
     for (auto& el : landmarks) {

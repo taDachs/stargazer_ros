@@ -44,7 +44,7 @@ LandmarkCalibratorInterface::LandmarkCalibratorInterface(ros::NodeHandle node_ha
     // Set parameters
     params_.fromNodeHandle(private_node_handle);
     bag_out.open(params_.bag_file + "_optimized.bag", rosbag::bagmode::Write);
-    bundleAdjuster = std::make_unique<stargazer::LandmarkCalibrator>(params_.stargazer_cfg_file_in);
+    bundleAdjuster = std::make_unique<stargazer::LandmarkCalibrator>(params_.cam_cfg_file_in, params_.map_cfg_file_in);
     load_data();
 
     // Init logging for ceres
@@ -132,7 +132,8 @@ void LandmarkCalibratorInterface::load_data() {
 }
 
 void LandmarkCalibratorInterface::write_data() {
-    writeConfig(params_.stargazer_cfg_file_out, bundleAdjuster->getIntrinsics(), bundleAdjuster->getLandmarks());
+    stargazer::writeCamConfig(params_.cam_cfg_file_out, bundleAdjuster->getIntrinsics());
+    stargazer::writeMapConfig(params_.map_cfg_file_out, bundleAdjuster->getLandmarks());
 
     ROS_INFO_STREAM("Writing bag file..." << bag_out.getFileName());
     for (size_t i = 0; i < observed_timestamps.size(); i++) {

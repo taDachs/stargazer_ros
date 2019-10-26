@@ -3,13 +3,19 @@
   <!-- Default values -->
   <arg name="nodelet_manager_name" default="standalone_nodelet"/>
   <arg name="start_nodelet_manager" default="true"/>
-  <arg name="stargazer_config" default="$(find stargazer_ros_tool)/res/stargazer.yaml"/>
-  <arg name="landmark_topic" default="/landmarks_seen"/>
-  <arg name="pose_topic" default="/stargazer/camera_pose"/>
-  <arg name="map_frame" default="world"/>
-  <arg name="camera_frame" default="camera"/>
   <arg name="debug_mode" default="false"/>
   <arg name="estimate_2d_pose" default="false"/>
+
+  <!-- Config Files
+  <arg name="cam_config" default="$(find stargazer_ros_tool)/param/cam.yaml"/>
+  <arg name="map_config" default="$(find stargazer_ros_tool)/param/map.yaml"/>
+
+  <!-- Topics -->
+  <arg name="landmark_topic" default="/landmarks_seen"/>
+  <arg name="pose_topic" default="/stargazer/camera_pose"/>
+
+  <arg name="map_frame" default="world"/>
+  <arg name="camera_frame" default="camera"/>
 
   <!-- Nodelet manager (if enabled) -->
   <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager_name)" args="manager"
@@ -18,7 +24,8 @@
   <node pkg="nodelet" type="nodelet" name="landmark_localizer_nodelet"
         args="load stargazer_ros_tool/LandmarkLocalizerInterfaceNodelet $(arg nodelet_manager_name)" output="screen">
 
-    <param name="stargazer_config" value="$(arg stargazer_config)"/>
+    <param name="cam_config" value="$(arg cam_config)"/>
+    <param name="map_config" value="$(arg map_config)"/>
     <param name="estimate_2d_pose" value="$(arg estimate_2d_pose)"/>
 
     <param name="pose_topic" value="$(arg pose_topic)"/>

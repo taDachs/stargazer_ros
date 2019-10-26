@@ -5,8 +5,10 @@
   <arg name="pose_topic" default="/stargazer/camera_pose"/>
 
   <node pkg="stargazer_ros_tool" type="landmark_calibrator" name="landmark_calibrator" output="screen" required="true">
-    <param name="stargazer_cfg_file_in" value="$(find stargazer_ros_tool)/res/stargazer.yaml"/>
-    <param name="stargazer_cfg_file_out" value="$(find stargazer_ros_tool)/res/stargazer_optimized.yaml"/>
+    <param name="cam_cfg_file_in" value="$(find stargazer_ros_tool)/param/cam.yaml"/>
+    <param name="cam_cfg_file_out" value="$(find stargazer_ros_tool)/out/cam_optimized.yaml"/>
+    <param name="map_cfg_file_in" value="$(find stargazer_ros_tool)/param/map.yaml"/>
+    <param name="map_cfg_file_out" value="$(find stargazer_ros_tool)/out/map_optimized.yaml"/>
     <param name="bag_file" value="$(find stargazer_ros_tool)/res/Stargazer.bag"/>
     <param name="pose_topic" value="$(arg pose_topic)"/>
     <param name="landmark_topic" value="$(arg landmark_topic)"/>
