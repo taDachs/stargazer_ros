@@ -7,9 +7,13 @@ namespace stargazer_ros_tool {
 void LandmarkFinderInterfaceParameters::fromNodeHandle(const ros::NodeHandle& nh) {
 
     getParam(nh, "map_config", map_config);
+    getParam(nh, "debug_mode", cfg.debug_mode);
+
+    // Topics
     getParam(nh, "landmark_topic", landmark_topic);
     getParam(nh, "undistorted_image_topic", undistorted_image_topic);
 
+    // Detection Parameters
     getParam(nh, "threshold", cfg.threshold);
     getParam(nh, "tight_filter_size", cfg.tight_filter_size);
     getParam(nh, "wide_filter_size", cfg.wide_filter_size);
@@ -19,7 +23,7 @@ void LandmarkFinderInterfaceParameters::fromNodeHandle(const ros::NodeHandle& nh
     getParam(nh, "maxRadiusForCluster", cfg.maxRadiusForCluster);
     getParam(nh, "minPointsPerLandmark", cfg.minPointsPerLandmark);
     getParam(nh, "maxPointsPerLandmark", cfg.maxPointsPerLandmark);
-    getParam(nh, "debug_mode", cfg.debug_mode);
+
 }
 
 void LandmarkFinderInterfaceParameters::fromConfig(const LandmarkFinderConfig& config, const uint32_t&) {
