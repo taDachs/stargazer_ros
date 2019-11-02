@@ -6,7 +6,7 @@
   <arg name="debug_mode" default="false"/>
   <arg name="estimate_2d_pose" default="false"/>
 
-  <!-- Config Files
+  <!-- Config Files -->
   <arg name="cam_config" default="$(find stargazer_ros_tool)/param/cam.yaml"/>
   <arg name="map_config" default="$(find stargazer_ros_tool)/param/map.yaml"/>
 
