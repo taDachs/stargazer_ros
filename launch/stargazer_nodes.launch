@@ -1,0 +1,60 @@
+<launch>
+
+  <!--Topics-->
+  <arg name="undistorted_image_topic" default="/sensors/camera/top/image_raw"/>
+  <arg name="landmark_topic" default="/landmarks_seen"/>
+  <arg name="pose_topic" default="/stargazer/camera_pose"/>
+
+  <!--TF Frames-->
+  <arg name="map_frame" default="stargazer"/>
+  <arg name="camera_frame" default="camera_top"/>
+
+  <!--Config Files-->
+  <arg name="cam_config" default="$(find stargazer_ros_tool)/param/cam.yaml"/>
+  <arg name="map_config" default="$(find stargazer_ros_tool)/param/map.yaml"/>
+  <arg name="detection_config" default="$(find stargazer_ros_tool)/param/landmark_finder.yaml"/>
+
+  <!--Miscellaneous-->
+  <arg name="record" default="false"/>
+  <arg name="debug_finder" default="false"/>
+  <arg name="debug_localizer" default="false"/>
+  <arg name="estimate_2d_pose" default="false"/>
+
+  <!--Landmark Finder-->
+  <include file="$(find stargazer_ros_tool)/launch/landmark_finder_node.launch">
+
+    <arg name="map_config" value="$(arg map_config)"/>
+    <arg name="detection_config" value="$(arg detection_config)"/>
+
+    <arg name="undistorted_image_topic" value="$(arg undistorted_image_topic)"/>
+    <arg name="landmark_topic" value="$(arg landmark_topic)"/>
+
+    <arg name="debug_mode" value="$(arg debug_finder)"/>
+  </include>
+
+
+  <!--Localizer-->
+  <include file="$(find stargazer_ros_tool)/launch/landmark_localizer_node.launch">
+
+    <arg name="cam_config" value="$(arg cam_config)"/>
+    <arg name="map_config" value="$(arg map_config)"/>
+    <arg name="estimate_2d_pose" value="$(arg estimate_2d_pose)"/>
+
+    <arg name="landmark_topic" value="$(arg landmark_topic)"/>
+    <arg name="pose_topic" value="$(arg pose_topic)"/>
+
+    <arg name="map_frame" value="$(arg map_frame)"/>
+    <arg name="camera_frame" value="$(arg camera_frame)"/>
+
+    <arg name="debug_mode" value="$(arg debug_localizer)"/>
+  </include>
+
+  <!--Rosbag record-->
+  <include file="$(find stargazer_ros_tool)/launch/rosbag_record.launch" if="$(arg record)">
+    <arg name="undistorted_image_topic" value="$(arg undistorted_image_topic)"/>
+    <arg name="landmark_topic" value="$(arg landmark_topic)"/>
+    <arg name="pose_topic" value="$(arg pose_topic)"/>
+  </include>
+
+
+</launch>

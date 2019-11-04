@@ -1,0 +1,22 @@
+<launch>
+
+  <!-- Default values -->
+  <arg name="debug_mode" default="false"/>
+
+  <!-- Config Files -->
+  <arg name="map_config" default="$(find stargazer_ros_tool)/param/map.yaml"/>
+  <arg name="detection_config" default="$(find stargazer_ros_tool)/param/landmark_finder.yaml"/>
+
+  <!-- Topics -->
+  <arg name="undistorted_image_topic" default="/camera_top/image_raw"/>
+  <arg name="landmark_topic" default="/landmarks_seen"/>
+
+  <node pkg="stargazer_ros_tool" type="landmark_finder" name="landmark_finder" output="screen" required="true">
+    <param name="map_config" value="$(arg map_config)"/>
+    <param name="landmark_topic" value="$(arg landmark_topic)"/>
+    <param name="undistorted_image_topic" value="$(arg undistorted_image_topic)"/>
+    <param name="debug_mode" value="$(arg debug_mode)"/>
+    <rosparam file="$(arg detection_config)" command="load"/>
+  </node>
+
+</launch>
