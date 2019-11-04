@@ -21,6 +21,7 @@
   <arg name="start_nodelet_manager" default="false"/>
   <arg name="debug_finder" default="false"/>
   <arg name="debug_localizer" default="false"/>
+  <arg name="estimate_2d_pose" default="false"/>
 
   <!-- Nodelet manager (if enabled) -->
   <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager_name)" args="manager" output="screen"/>
@@ -49,7 +50,7 @@
 
     <arg name="cam_config" value="$(arg cam_config)"/>
     <arg name="map_config" value="$(arg map_config)"/>
-    <arg name="estimate_2d_pose" value="true"/>
+    <arg name="estimate_2d_pose" value="$(arg estimate_2d_pose)"/>
 
     <arg name="landmark_topic" value="$(arg landmark_topic)"/>
     <arg name="pose_topic" value="$(arg pose_topic)"/>
