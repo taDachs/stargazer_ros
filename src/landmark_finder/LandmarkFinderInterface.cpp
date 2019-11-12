@@ -2,6 +2,7 @@
 
 #include "../StargazerConversionMethods.h"
 #include "../ros_utils.h"
+#include <opencv2/features2d.hpp>
 
 using namespace stargazer_ros_tool;
 
@@ -39,16 +40,14 @@ void LandmarkFinderInterface::imgCallback(const sensor_msgs::ImageConstPtr& msg)
 
     // Invert images
     cv::bitwise_not(landmarkFinder->grayImage_, landmarkFinder->grayImage_);
-    cv::bitwise_not(landmarkFinder->filteredImage_, landmarkFinder->filteredImage_);
 
     // Show images
     debugVisualizer_.ShowImage(landmarkFinder->grayImage_, "Gray Image");
-    debugVisualizer_.ShowImage(landmarkFinder->filteredImage_, "Filtered Image");
 
     // Show detections
-    auto point_img = debugVisualizer_.ShowPoints(landmarkFinder->filteredImage_,
+    auto point_img = debugVisualizer_.ShowPoints(landmarkFinder->grayImage_,
                                                  landmarkFinder->clusteredPixels_);
-    auto cluster_img = debugVisualizer_.ShowClusters(landmarkFinder->filteredImage_,
+    auto cluster_img = debugVisualizer_.ShowClusters(landmarkFinder->grayImage_,
                                                      landmarkFinder->clusteredPoints_);
     auto hypotheses_img = debugVisualizer_.ShowLandmarkHypotheses(landmarkFinder->grayImage_,
                                                                   landmarkFinder->landmarkHypotheses_);
@@ -65,13 +64,8 @@ void LandmarkFinderInterface::reconfigureCallback(LandmarkFinderConfig& config,
 
     params_.fromConfig(config, level);
 
-    landmarkFinder->tight_filter_size = static_cast<uint32_t>(params_.cfg.tight_filter_size);
-    landmarkFinder->wide_filter_size = static_cast<uint32_t>(params_.cfg.wide_filter_size);
-    landmarkFinder->threshold = static_cast<uint8_t>(params_.cfg.threshold);
+    // Point Clustering
     landmarkFinder->maxRadiusForCluster = params_.cfg.maxRadiusForCluster;
-    landmarkFinder->maxRadiusForPixelCluster = params_.cfg.maxRadiusForPixelCluster;
-    landmarkFinder->maxPixelForCluster = static_cast<uint16_t>(params_.cfg.maxPixelForCluster);
-    landmarkFinder->minPixelForCluster = static_cast<uint16_t>(params_.cfg.minPixelForCluster);
     landmarkFinder->maxPointsPerLandmark = static_cast<uint16_t>(params_.cfg.maxPointsPerLandmark);
     landmarkFinder->minPointsPerLandmark = static_cast<uint16_t>(params_.cfg.minPointsPerLandmark);
 
@@ -82,4 +76,22 @@ void LandmarkFinderInterface::reconfigureCallback(LandmarkFinderConfig& config,
     landmarkFinder->fwCrossProduct = params_.cfg.fwCrossProduct;
     landmarkFinder->cornerAngleTolerance = params_.cfg.cornerAngleTolerance;
     landmarkFinder->pointInsideTolerance = params_.cfg.pointInsideTolerance;
+
+    landmarkFinder->blobParams.filterByArea = params_.cfg.blobFilterByArea;
+    landmarkFinder->blobParams.filterByCircularity = params_.cfg.blobFilterByCircularity;
+    landmarkFinder->blobParams.filterByConvexity = params_.cfg.blobFilterByConvexity;
+    landmarkFinder->blobParams.filterByInertia = params_.cfg.blobFilterByInertia;
+    landmarkFinder->blobParams.maxArea = params_.cfg.blobMaxArea;
+    landmarkFinder->blobParams.maxCircularity = params_.cfg.blobMaxCircularity;
+    landmarkFinder->blobParams.maxConvexity = params_.cfg.blobMaxConvexity;
+    landmarkFinder->blobParams.maxInertiaRatio = params_.cfg.blobMaxInertiaRatio;
+    landmarkFinder->blobParams.maxThreshold = params_.cfg.blobMaxThreshold;
+    landmarkFinder->blobParams.minArea = params_.cfg.blobMinArea;
+    landmarkFinder->blobParams.minCircularity = params_.cfg.blobMinCircularity;
+    landmarkFinder->blobParams.minConvexity = params_.cfg.blobMinConvexity;
+    landmarkFinder->blobParams.minDistBetweenBlobs = params_.cfg.blobMinDistBetweenBlobs;
+    landmarkFinder->blobParams.minInertiaRatio = params_.cfg.blobMinInertiaRatio;
+    landmarkFinder->blobParams.minRepeatability = params_.cfg.blobMinRepeatability;
+    landmarkFinder->blobParams.minThreshold = params_.cfg.blobMinThreshold;
+    landmarkFinder->blobParams.thresholdStep = params_.cfg.blobThresholdStep;
 }
