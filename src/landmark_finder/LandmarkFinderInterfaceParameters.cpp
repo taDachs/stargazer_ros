@@ -24,6 +24,13 @@ void LandmarkFinderInterfaceParameters::fromNodeHandle(const ros::NodeHandle& nh
     getParam(nh, "minPointsPerLandmark", cfg.minPointsPerLandmark);
     getParam(nh, "maxPointsPerLandmark", cfg.maxPointsPerLandmark);
 
+    //Corner Detection
+    getParam(nh, "maxCornerHypotheses", cfg.maxCornerHypotheses);
+    getParam(nh, "cornerHypothesesCutoff", cfg.cornerHypothesesCutoff);
+    getParam(nh, "fwLengthTriangle", cfg.fwLengthTriangle);
+    getParam(nh, "fwCrossProduct", cfg.fwCrossProduct);
+    getParam(nh, "cornerAngleTolerance", cfg.cornerAngleTolerance);
+    getParam(nh, "pointInsideTolerance", cfg.pointInsideTolerance);
 }
 
 void LandmarkFinderInterfaceParameters::fromConfig(const LandmarkFinderConfig& config, const uint32_t&) {

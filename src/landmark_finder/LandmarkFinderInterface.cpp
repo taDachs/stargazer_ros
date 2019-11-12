@@ -74,4 +74,12 @@ void LandmarkFinderInterface::reconfigureCallback(LandmarkFinderConfig& config,
     landmarkFinder->minPixelForCluster = static_cast<uint16_t>(params_.cfg.minPixelForCluster);
     landmarkFinder->maxPointsPerLandmark = static_cast<uint16_t>(params_.cfg.maxPointsPerLandmark);
     landmarkFinder->minPointsPerLandmark = static_cast<uint16_t>(params_.cfg.minPointsPerLandmark);
+
+    // Corner Detection
+    landmarkFinder->maxCornerHypotheses = params_.cfg.maxCornerHypotheses;
+    landmarkFinder->cornerHypothesesCutoff = params_.cfg.cornerHypothesesCutoff;
+    landmarkFinder->fwLengthTriangle = params_.cfg.fwLengthTriangle;
+    landmarkFinder->fwCrossProduct = params_.cfg.fwCrossProduct;
+    landmarkFinder->cornerAngleTolerance = params_.cfg.cornerAngleTolerance;
+    landmarkFinder->pointInsideTolerance = params_.cfg.pointInsideTolerance;
 }
