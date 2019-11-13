@@ -1,14 +1,31 @@
-# Image Preprocessing
-threshold: 140 #Threshold for grayvalue thresholding 0-254
-tight_filter_size: 3
-wide_filter_size: 31
-
-# Point Detection
-maxRadiusForPixelCluster: 3. #Maximum radius for clustering pixels to marker points
-minPixelForCluster: 1 #Minimum count of pixels per marker point
-maxPixelForCluster: 1000 #Maximum count of pixels per marker point
+# Point Detection (blob detection)
+blobFilterByArea: False
+blobMinArea: 0
+blobMaxArea: 1000
+blobFilterByCircularity: True
+blobMinCircularity: 0.4
+blobMaxCircularity: 1.01
+blobFilterByConvexity: False
+blobMinConvexity: 0
+blobMaxConvexity: 1.01
+blobFilterByInertia: False
+blobMinInertiaRatio: 0
+blobMaxInertiaRatio: 1.01
+blobMinDistBetweenBlobs: 0
+blobMinRepeatability: 2
+blobMinThreshold: 200
+blobMaxThreshold: 255
+blobThresholdStep: 50
 
 # Landmark Detection
-maxRadiusForCluster: 40. #Maximum radius for clustering marker points to landmarks
+maxRadiusForCluster: 60. #Maximum radius for clustering marker points to landmarks
 minPointsPerLandmark: 5 #Minimum count of marker points per landmark
 maxPointsPerLandmark: 9 #Maximum count of marker points per landmark (depends on grid used)
+
+#Corner Detection
+fwLengthTriangle: 1.0 #weight factor for the circumference of the triangle
+fwCrossProduct: 1.0 #weight factor for the cross product of the secants
+pointInsideTolerance: 0.1
+cornerAngleTolerance: 0.5
+maxCornerHypotheses: 1
+cornerHypothesesCutoff: 0.9
