@@ -38,25 +38,25 @@ void LandmarkFinderInterface::imgCallback(const sensor_msgs::ImageConstPtr& msg)
     if (!params_.cfg.debug_mode)
         return;
 
-    // Invert images
+    // Invert input image
     cv::bitwise_not(landmarkFinder->grayImage_, landmarkFinder->grayImage_);
 
-    // Show images
-    debugVisualizer_.ShowImage(landmarkFinder->grayImage_, "Gray Image");
-
-    // Show detections
-    auto point_img = debugVisualizer_.ShowPoints(landmarkFinder->grayImage_,
+    // Draw detections
+    auto point_img = debugVisualizer_.DrawPoints(landmarkFinder->grayImage_,
                                                  landmarkFinder->clusteredPixels_);
-    auto cluster_img = debugVisualizer_.ShowClusters(landmarkFinder->grayImage_,
+    auto cluster_img = debugVisualizer_.DrawClusters(landmarkFinder->grayImage_,
                                                      landmarkFinder->clusteredPoints_);
-    auto hypotheses_img = debugVisualizer_.ShowLandmarkHypotheses(landmarkFinder->grayImage_,
+    auto hypotheses_img = debugVisualizer_.DrawLandmarkHypotheses(landmarkFinder->grayImage_,
                                                                   landmarkFinder->landmarkHypotheses_);
+    auto landmarks_img = debugVisualizer_.DrawLandmarks(landmarkFinder->grayImage_,
+                                                        detected_img_landmarks);
 
-    // Show landmarks
-    cv::Mat temp;
-    cvtColor(landmarkFinder->grayImage_, temp, CV_GRAY2BGR);
-    debugVisualizer_.DrawLandmarks(temp, detected_img_landmarks);
-    debugVisualizer_.ShowImage(temp, "Detected Landmarks");
+    // Show images
+    debugVisualizer_.ShowImage(landmarkFinder->grayImage_, "0 Gray Image");
+    debugVisualizer_.ShowImage(point_img, "1 Points");
+    debugVisualizer_.ShowImage(cluster_img, "2 Clusters");
+    debugVisualizer_.ShowImage(hypotheses_img, "3 Hypotheses");
+    debugVisualizer_.ShowImage(landmarks_img, "4 Landmarks");
 }
 
 void LandmarkFinderInterface::reconfigureCallback(LandmarkFinderConfig& config,
