@@ -7,11 +7,11 @@ namespace stargazer_ros_tool {
 
 class LandmarkFinderInterfaceNodelet : public nodelet::Nodelet {
 
-    inline void onInit() override {
-        m_ = std::make_unique<LandmarkFinderInterface>(getNodeHandle(), getPrivateNodeHandle());
-    }
-    std::unique_ptr<LandmarkFinderInterface> m_;
+  inline void onInit() override {
+    m_ = std::make_unique<LandmarkFinderInterface>(getNodeHandle(), getPrivateNodeHandle());
+  }
+  std::unique_ptr<LandmarkFinderInterface> m_;
 };
-}
+}  // namespace stargazer_ros_tool
 
 PLUGINLIB_EXPORT_CLASS(stargazer_ros_tool::LandmarkFinderInterfaceNodelet, nodelet::Nodelet);
