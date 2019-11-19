@@ -64,8 +64,8 @@ void LandmarkLocalizerInterface::landmarkCallback(const stargazer_ros_tool::Land
   if (params_.debug_mode) {
     cv::Mat img = cv::Mat::zeros(1024, 1360, CV_8UC3);  // TODO is an hardcoded image resolution valid?
     img.setTo(cv::Scalar(255, 255, 255));
-    debugVisualizer_.DrawLandmarks(img, detected_landmarks);
-    debugVisualizer_.DrawLandmarks(
+    img = debugVisualizer_.DrawLandmarks(img, detected_landmarks);
+    img = debugVisualizer_.DrawLandmarks(
         img, localizer_->getLandmarks(), localizer_->getIntrinsics(), pose);
     debugVisualizer_.ShowImage(img, "ReprojectionImage");
   }
