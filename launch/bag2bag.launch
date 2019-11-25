@@ -12,7 +12,7 @@
 
   <!-- Rosbags -->
   <arg name="in_raw_bag" default="$(find stargazer_ros_tool)/res/stargazer_raw.bag"/>
-  <arg name="out_bag_for_calib" default="/tmp/stargazer_bag_for_calib.bag"/>
+  <arg name="out_bag" default="/tmp/stargazer_bag_for_calib.bag"/>
 
   <!--Rosbag Play-->
   <param name="use_sim_time" value="true"/>
@@ -38,6 +38,6 @@
   </include>
 
   <node pkg="rosbag" type="record" name="rosbag_record"
-      args="record -o $(arg out_bag_for_calib) $(arg pose_topic) $(arg landmark_topic)" />
+      args="record -o $(arg out_bag) $(arg img_topic) $(arg pose_topic) $(arg landmark_topic)" />
 
 </launch>
