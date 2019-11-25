@@ -17,7 +17,6 @@
   <arg name="detection_config" default="$(find stargazer_ros_tool)/param/landmark_finder.yaml"/>
 
   <!--Miscellaneous-->
-  <arg name="record" default="false"/>
   <arg name="start_nodelet_manager" default="false"/>
   <arg name="debug_finder" default="false"/>
   <arg name="debug_localizer" default="false"/>
@@ -60,13 +59,5 @@
 
     <arg name="debug_mode" value="$(arg debug_localizer)"/>
   </include>
-
-  <!--Rosbag record-->
-  <include file="$(find stargazer_ros_tool)/launch/rosbag_record.launch" if="$(arg record)">
-    <arg name="undistorted_image_topic" value="$(arg undistorted_image_topic)"/>
-    <arg name="landmark_topic" value="$(arg landmark_topic)"/>
-    <arg name="pose_topic" value="$(arg pose_topic)"/>
-  </include>
-
 
 </launch>
