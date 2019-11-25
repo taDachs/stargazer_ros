@@ -31,7 +31,7 @@ TODO: Describe the installation process
    * Outputs
      * landmark_finder.yaml
 2. Run Stargazer Localization and record bag
-   * roslaunch stargazer_ros_tool stargazer_nodelets.launch record:=true yournondefaultparams:=foobar [...]
+   * roslaunch stargazer_ros_tool bag2bag.launch yournondefaultparams:=foobar [...]
    * Inputs
      * cam_guess.yaml
      * map_guess.yaml
