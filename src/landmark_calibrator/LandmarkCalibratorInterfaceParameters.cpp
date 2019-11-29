@@ -10,6 +10,7 @@ LandmarkCalibratorInterfaceParameters& LandmarkCalibratorInterfaceParameters::ge
 }
 
 void LandmarkCalibratorInterfaceParameters::fromNodeHandle(const ros::NodeHandle& node_handle) {
+  getParam(node_handle, "constant_intrinsics", constant_intrinsics);
   getParam(node_handle, "cam_cfg_file_in", cam_cfg_file_in);
   getParam(node_handle, "cam_cfg_file_out", cam_cfg_file_out);
   getParam(node_handle, "map_cfg_file_in", map_cfg_file_in);

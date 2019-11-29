@@ -11,6 +11,7 @@ struct LandmarkCalibratorInterfaceParameters {
 
   void fromNodeHandle(const ros::NodeHandle&);
 
+  bool constant_intrinsics;
   std::string cam_cfg_file_in;
   std::string cam_cfg_file_out;
   std::string map_cfg_file_in;

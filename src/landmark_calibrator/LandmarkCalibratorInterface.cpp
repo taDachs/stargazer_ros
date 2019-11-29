@@ -153,8 +153,11 @@ void LandmarkCalibratorInterface::write_data() {
 void LandmarkCalibratorInterface::optimize() {
   // Start work by setting up problem
   bundleAdjuster->AddReprojectionResidualBlocks(observed_poses, observed_landmarks);
-  //    bundleAdjuster->SetPoseConstant(0); // First pose
-  bundleAdjuster->SetLandmarkConstant(400);  // First landmark in the lower left corner
-                                             //    bundleAdjuster->SetParametersConstant();
+  // xy origin is landmark in southwest corner mrt maschinenhalle 0x0190
+  // x axis points approximatly east, to landmark near of entry of maschinenhalle 0x2084
+  bundleAdjuster->SetLandmarksOriginAndXAxis(0x0190, 0x2084);
+  if (params_.constant_intrinsics) {
+    bundleAdjuster->SetIntrinsicsConstant();
+  }
   bundleAdjuster->Optimize();
 }
