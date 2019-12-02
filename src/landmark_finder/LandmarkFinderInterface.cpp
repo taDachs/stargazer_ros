@@ -20,8 +20,17 @@ LandmarkFinderInterface::LandmarkFinderInterface(ros::NodeHandle nh_public,
       params_.undistorted_image_topic, 1, &LandmarkFinderInterface::imgCallback, this);
   debugVisualizer_.SetWaitTime(10);
 
-  if (params_.cfg.debug_mode)
-    showNodeInfo();
+  if (!params_.cfg.debug_mode)
+    return;
+
+  showNodeInfo();
+  debug_pub_points = nh_private.advertise<sensor_msgs::Image>("debug_1_points", 1);
+  debug_pub_clusters =
+      nh_private.advertise<sensor_msgs::Image>("debug_2_clusters", 1);
+  debug_pub_hypotheses =
+      nh_private.advertise<sensor_msgs::Image>("debug_3_hypotheses", 1);
+  debug_pub_landmarks =
+      nh_private.advertise<sensor_msgs::Image>("debug_4_landmarks", 1);
 }
 
 void LandmarkFinderInterface::imgCallback(const sensor_msgs::ImageConstPtr& msg) {
@@ -45,21 +54,25 @@ void LandmarkFinderInterface::imgCallback(const sensor_msgs::ImageConstPtr& msg)
   cv::bitwise_not(landmarkFinder->grayImage_, landmarkFinder->grayImage_);
 
   // Draw detections
-  auto point_img = debugVisualizer_.DrawPoints(
-      landmarkFinder->grayImage_, landmarkFinder->clusteredPixels_);
-  auto cluster_img = debugVisualizer_.DrawClusters(
-      landmarkFinder->grayImage_, landmarkFinder->clusteredPoints_);
-  auto hypotheses_img = debugVisualizer_.DrawLandmarkHypotheses(
-      landmarkFinder->grayImage_, landmarkFinder->landmarkHypotheses_);
-  auto landmarks_img = debugVisualizer_.DrawLandmarks(
-      landmarkFinder->grayImage_, detected_img_landmarks);
+  cv_bridge::CvImage out_msg;
+  out_msg.header = msg->header;
+  out_msg.encoding = sensor_msgs::image_encodings::BGR8;
 
-  // Show images
-  debugVisualizer_.ShowImage(landmarkFinder->grayImage_, "0 Gray Image");
-  debugVisualizer_.ShowImage(point_img, "1 Points");
-  debugVisualizer_.ShowImage(cluster_img, "2 Clusters");
-  debugVisualizer_.ShowImage(hypotheses_img, "3 Hypotheses");
-  debugVisualizer_.ShowImage(landmarks_img, "4 Landmarks");
+  out_msg.image = debugVisualizer_.DrawPoints(landmarkFinder->grayImage_,
+                                              landmarkFinder->clusteredPixels_);
+  debug_pub_points.publish(out_msg.toImageMsg());
+
+  out_msg.image = debugVisualizer_.DrawClusters(
+      landmarkFinder->grayImage_, landmarkFinder->clusteredPoints_);
+  debug_pub_clusters.publish(out_msg.toImageMsg());
+
+  out_msg.image = debugVisualizer_.DrawLandmarkHypotheses(
+      landmarkFinder->grayImage_, landmarkFinder->landmarkHypotheses_);
+  debug_pub_hypotheses.publish(out_msg.toImageMsg());
+
+  out_msg.image = debugVisualizer_.DrawLandmarks(landmarkFinder->grayImage_,
+                                                 detected_img_landmarks);
+  debug_pub_landmarks.publish(out_msg.toImageMsg());
 }
 
 void LandmarkFinderInterface::reconfigureCallback(LandmarkFinderConfig& config,

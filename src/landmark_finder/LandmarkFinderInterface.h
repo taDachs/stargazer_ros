@@ -26,6 +26,7 @@ class LandmarkFinderInterface {
   image_transport::Subscriber img_sub;
   image_transport::ImageTransport img_trans;
   ros::Publisher lm_pub;
+  ros::Publisher debug_pub_points, debug_pub_clusters, debug_pub_hypotheses, debug_pub_landmarks;
   dynamic_reconfigure::Server<LandmarkFinderConfig> server;
   LandmarkFinderInterfaceParameters params_;
   stargazer::DebugVisualizer debugVisualizer_;
