@@ -8,10 +8,13 @@
 
   <arg name="bag" default="$(find stargazer_ros_tool)/res/Stargazer.bag"/>
 
+  <arg name="constant_intrinsics" default="true"/>
+
   <arg name="landmark_topic" default="/landmarks_seen"/>
   <arg name="pose_topic" default="/stargazer/camera_pose"/>
 
   <node pkg="stargazer_ros_tool" type="landmark_calibrator" name="landmark_calibrator" output="screen" required="true">
+    <param name="constant_intrinsics" value="$(arg constant_intrinsics)"/>
     <param name="cam_cfg_file_in" value="$(arg cam_in)"/>
     <param name="cam_cfg_file_out" value="$(arg cam_out)"/>
     <param name="map_cfg_file_in" value="$(arg map_in)"/>
