@@ -38,6 +38,7 @@ class LandmarkLocalizerInterface {
 
   LandmarkLocalizerInterfaceParameters params_;
   stargazer::DebugVisualizer debugVisualizer_;
+  ros::Publisher debug_pub_reprojection;
 
   std::unique_ptr<stargazer::Localizer> localizer_;
 

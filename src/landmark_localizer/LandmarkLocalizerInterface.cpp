@@ -3,6 +3,7 @@
 //
 
 #include "LandmarkLocalizerInterface.h"
+#include <cv_bridge/cv_bridge.h>
 #include "../StargazerConversionMethods.h"
 #include "../ros_utils.h"
 #include "stargazer/CeresLocalizer.h"
@@ -30,8 +31,12 @@ LandmarkLocalizerInterface::LandmarkLocalizerInterface(ros::NodeHandle node_hand
   lm_sub = private_node_handle.subscribe<stargazer_ros_tool::LandmarkArray>(
       params_.landmark_topic, 1, &LandmarkLocalizerInterface::landmarkCallback, this);
 
-  if (params_.debug_mode)
-    showNodeInfo();
+  if (!params_.debug_mode)
+    return;
+
+  showNodeInfo();
+  debug_pub_reprojection =
+      private_node_handle.advertise<sensor_msgs::Image>("debug_reprojection", 1);
 }
 
 void LandmarkLocalizerInterface::landmarkCallback(const stargazer_ros_tool::LandmarkArray::ConstPtr& msg) {
@@ -60,16 +65,6 @@ void LandmarkLocalizerInterface::landmarkCallback(const stargazer_ros_tool::Land
   poseStamped.pose = pose2gmPose(pose);
   pose_pub.publish(poseStamped);
 
-  //  Visualize
-  if (params_.debug_mode) {
-    cv::Mat img = cv::Mat::zeros(1024, 1360, CV_8UC3);  // TODO is an hardcoded image resolution valid?
-    img.setTo(cv::Scalar(255, 255, 255));
-    img = debugVisualizer_.DrawLandmarks(img, detected_landmarks);
-    img = debugVisualizer_.DrawLandmarks(
-        img, localizer_->getLandmarks(), localizer_->getIntrinsics(), pose);
-    debugVisualizer_.ShowImage(img, "ReprojectionImage");
-  }
-
   const ceres::Solver::Summary& summary =
       dynamic_cast<stargazer::CeresLocalizer*>(localizer_.get())->getSummary();
   ROS_DEBUG_STREAM("Number of iterations: " << summary.iterations.size() << " Time needed: "
@@ -79,6 +74,21 @@ void LandmarkLocalizerInterface::landmarkCallback(const stargazer_ros_tool::Land
                     << ceres::TerminationTypeToString(summary.termination_type));
     ROS_WARN_STREAM(summary.FullReport());
   }
+
+  //  Visualize
+  if (!params_.debug_mode)
+    return;
+
+  cv_bridge::CvImage out_msg;
+  out_msg.header = msg->header;
+  out_msg.encoding = sensor_msgs::image_encodings::BGR8;
+
+  out_msg.image = cv::Mat::zeros(1024, 1360, CV_8UC3);  // TODO is an hardcoded image resolution valid?
+  out_msg.image.setTo(cv::Scalar(255, 255, 255));
+  out_msg.image = debugVisualizer_.DrawLandmarks(out_msg.image, detected_landmarks);
+  out_msg.image = debugVisualizer_.DrawLandmarks(
+      out_msg.image, localizer_->getLandmarks(), localizer_->getIntrinsics(), pose);
+  debug_pub_reprojection.publish(out_msg.toImageMsg());
 }
 
 void LandmarkLocalizerInterface::reconfigureCallback(LandmarkLocalizerConfig& config,
