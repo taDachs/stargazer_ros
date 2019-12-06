@@ -35,20 +35,20 @@ inline stargazer::ImgLandmark convert2ImgLandmark(const stargazer_ros_tool::Land
   stargazer::ImgLandmark lm_out;
   lm_out.nID = lm_in.id;
 
-  lm_out.voCorners.reserve(lm_in.corner_points.size());
+  lm_out.corners.reserve(lm_in.corner_points.size());
   for (auto& el : lm_in.corner_points) {
     cv::Point pt;
     pt.x = el.u;
     pt.y = el.v;
-    lm_out.voCorners.push_back(pt);
+    lm_out.corners.push_back(pt);
   }
 
-  lm_out.voIDPoints.reserve(lm_in.id_points.size());
+  lm_out.idPoints.reserve(lm_in.id_points.size());
   for (auto& el : lm_in.id_points) {
     cv::Point pt;
     pt.x = el.u;
     pt.y = el.v;
-    lm_out.voIDPoints.push_back(pt);
+    lm_out.idPoints.push_back(pt);
   }
 
   return lm_out;
@@ -89,14 +89,14 @@ inline stargazer_ros_tool::LandmarkArray convert2LandmarkMsg(
     landmark.header = header;
     landmark.id = lm.nID;
 
-    for (auto& pt : lm.voCorners) {
+    for (auto& pt : lm.corners) {
       stargazer_ros_tool::LandmarkPoint lmpt;
       lmpt.u = static_cast<stargazer_ros_tool::LandmarkPoint::_u_type>(pt.x);
       lmpt.v = static_cast<stargazer_ros_tool::LandmarkPoint::_v_type>(pt.y);
       landmark.corner_points.push_back(lmpt);
     }
 
-    for (auto& pt : lm.voIDPoints) {
+    for (auto& pt : lm.idPoints) {
       stargazer_ros_tool::LandmarkPoint lmpt;
       lmpt.u = static_cast<stargazer_ros_tool::LandmarkPoint::_u_type>(pt.x);
       lmpt.v = static_cast<stargazer_ros_tool::LandmarkPoint::_v_type>(pt.y);

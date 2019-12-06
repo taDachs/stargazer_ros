@@ -73,7 +73,7 @@ void LandmarkCalibratorInterface::synchronizerCallback(
       std::remove_if(img_lms.begin(),
                      img_lms.end(),
                      [&](stargazer::ImgLandmark& lm) {
-                       return (lm.voCorners.size() + lm.voIDPoints.size() !=
+                       return (lm.corners.size() + lm.idPoints.size() !=
                                bundleAdjuster->getLandmarks().at(lm.nID).points.size());
                      }),
       img_lms.end());
