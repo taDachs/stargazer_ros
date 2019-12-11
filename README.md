@@ -10,11 +10,52 @@ TODO: Describe the installation process
 ## Usage
 
 ### Calibration
-
- 1. Record rosbag of poses and landmarks using 
-    roslaunch stargazer_ros_tool stargazer_nodelets.launch record:=true
- 2. Start calibration
-    roslaunch stargazer_ros_tool landmark_calibrator.launch
+1. Get an approximate intrisic camera calibration file
+   * e.g. chessboard calibration
+   * Outputs
+     * cam_guess.yaml
+2. Get an approximate stargazer landmark map file
+   * Most importantly tells which landmarks can be found at all
+   * Outputs
+     * map_guess.yaml
+2. Record raw rosbag for calibration
+   * All landmarks should be seen
+   * Outputs
+     * stargazer_raw.bag
+       * /image_raw
+2. Play rosbag and tune detection parameters manually (then save them)
+   * rosbag play -l stargazer_raw.bag -r 0.2
+     * slow rate for better tuning
+   * roslaunch stargazer_ros_tool stargazer_nodes.launch debug_finder:=true undistorted_image_topic:=<topic> map_config:=map_guess.yaml
+     * map tells which landmarks exist at all (pose is unimportant here)
+   * Outputs
+     * landmark_finder.yaml
+2. Run Stargazer Localization and record bag
+   * roslaunch stargazer_ros_tool bag2bag.launch yournondefaultparams:=foobar [...]
+   * Inputs
+     * cam_guess.yaml
+     * map_guess.yaml
+     * landmark_finder.yaml
+     * stargazer_raw.bag
+       * /image_raw
+   * Outputs
+     * stargazer_localized.bag
+       * /landmarks_seen
+       * /camera_pose
+2. Run Stargazer Calibration
+   * roslaunch stargazer_ros_tool offline_landmark_calibrator.launch yournondefaultparams:=foobar [...]
+   * Inputs
+     * cam_guess.yaml
+     * map_guess.yaml
+     * stargazer_localized.bag
+       * /landmarks_seen
+       * /camera_pose
+   * Outputs
+     * cam_optimized.yaml
+     * map_optimized.yaml
+2. Repeat the last two steps with better new guess
+   * Should converge
+2. Use config files for other (non calibration) rosbags
 
 ### Localization
 

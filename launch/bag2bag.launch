@@ -1,0 +1,43 @@
+<launch>
+
+  <!-- Default values -->
+  <arg name="cam_config" default="$(find stargazer_ros_tool)/param/cam.yaml"/>
+  <arg name="map_config" default="$(find stargazer_ros_tool)/param/map.yaml"/>
+  <arg name="landmark_finder_config" default="$(find stargazer_ros_tool)/param/landmark_finder.yaml"/>
+
+  <!-- Topics -->
+  <arg name="landmark_topic" default="/landmarks_seen"/>
+  <arg name="img_topic" default="/camera/image_raw_stargazer"/>
+  <arg name="pose_topic" default="/stargazer/camera_pose"/>
+
+  <!-- Rosbags -->
+  <arg name="in_raw_bag" default="$(find stargazer_ros_tool)/res/stargazer_raw.bag"/>
+  <arg name="out_bag" default="/tmp/stargazer_bag_for_calib.bag"/>
+
+  <!--Rosbag Play-->
+  <param name="use_sim_time" value="true"/>
+  <node pkg="rosbag" type="play" name="rosbag_play" output="screen" args="--clock --rate 0.2 $(arg in_raw_bag)" required="true"/>
+
+  <!-- Stargazer -->
+  <include file="$(find stargazer_ros_tool)/launch/stargazer_nodelets.launch">
+    <arg name="estimate_2d_pose" value="false"/>
+    <!--Topics-->
+    <arg name="undistorted_image_topic" value="$(arg img_topic)"/>
+    <arg name="landmark_topic" value="$(arg landmark_topic)"/>
+    <arg name="pose_topic" value="$(arg pose_topic)"/>
+    <!--TF Frames-->
+    <arg name="map_frame" value="map_stargazer"/>
+    <arg name="camera_frame" value="camera_stargazer"/>
+    <!--Config Files-->
+    <arg name="map_config" value="$(arg map_config)"/>
+    <arg name="cam_config" value="$(arg cam_config)"/>
+    <arg name="detection_config" value="$(arg landmark_finder_config)"/>
+    <!--Debugging-->
+    <arg name="debug_finder" value="false"/>
+    <arg name="debug_localizer" value="false"/>
+  </include>
+
+  <node pkg="rosbag" type="record" name="rosbag_record"
+      args="record -o $(arg out_bag) $(arg img_topic) $(arg pose_topic) $(arg landmark_topic)" />
+
+</launch>

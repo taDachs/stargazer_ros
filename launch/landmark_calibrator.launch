@@ -1,13 +1,25 @@
 <launch>
 
   <!-- Default values -->
+  <arg name="cam_in" default="$(find stargazer_ros_tool)/param/cam.yaml"/>
+  <arg name="cam_out" default="$(find stargazer_ros_tool)/out/cam_optimized.yaml"/>
+  <arg name="map_in" default="$(find stargazer_ros_tool)/param/map.yaml"/>
+  <arg name="map_out" default="$(find stargazer_ros_tool)/out/map_optimized.yaml"/>
+
+  <arg name="bag" default="$(find stargazer_ros_tool)/res/Stargazer.bag"/>
+
+  <arg name="constant_intrinsics" default="true"/>
+
   <arg name="landmark_topic" default="/landmarks_seen"/>
   <arg name="pose_topic" default="/stargazer/camera_pose"/>
 
   <node pkg="stargazer_ros_tool" type="landmark_calibrator" name="landmark_calibrator" output="screen" required="true">
-    <param name="stargazer_cfg_file_in" value="$(find stargazer_ros_tool)/res/stargazer.yaml"/>
-    <param name="stargazer_cfg_file_out" value="$(find stargazer_ros_tool)/res/stargazer_optimized.yaml"/>
-    <param name="bag_file" value="$(find stargazer_ros_tool)/res/Stargazer.bag"/>
+    <param name="constant_intrinsics" value="$(arg constant_intrinsics)"/>
+    <param name="cam_cfg_file_in" value="$(arg cam_in)"/>
+    <param name="cam_cfg_file_out" value="$(arg cam_out)"/>
+    <param name="map_cfg_file_in" value="$(arg map_in)"/>
+    <param name="map_cfg_file_out" value="$(arg map_out)"/>
+    <param name="bag_file" value="$(arg bag)"/>
     <param name="pose_topic" value="$(arg pose_topic)"/>
     <param name="landmark_topic" value="$(arg landmark_topic)"/>
   </node>

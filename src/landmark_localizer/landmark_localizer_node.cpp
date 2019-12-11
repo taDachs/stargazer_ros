@@ -2,11 +2,11 @@
 
 int main(int argc, char** argv) {
 
-    ros::init(argc, argv, "landmark_localizer_node");
+  ros::init(argc, argv, "landmark_localizer_node");
 
-    stargazer_ros_tool::LandmarkLocalizerInterface interface(ros::NodeHandle(),
-                                                             ros::NodeHandle("~"));
+  stargazer_ros_tool::LandmarkLocalizerInterface interface(
+      ros::NodeHandle(), ros::NodeHandle("~"));
 
-    ros::spin();
-    return EXIT_SUCCESS;
+  ros::spin();
+  return EXIT_SUCCESS;
 }
