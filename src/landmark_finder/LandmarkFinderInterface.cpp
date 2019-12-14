@@ -59,7 +59,7 @@ void LandmarkFinderInterface::imgCallback(const sensor_msgs::ImageConstPtr& msg)
   out_msg.encoding = sensor_msgs::image_encodings::BGR8;
 
   out_msg.image = debugVisualizer_.DrawPoints(landmarkFinder->grayImage_,
-                                              landmarkFinder->clusteredPixels_);
+                                              landmarkFinder->points_);
   debug_pub_points.publish(out_msg.toImageMsg());
 
   out_msg.image = debugVisualizer_.DrawClusters(
