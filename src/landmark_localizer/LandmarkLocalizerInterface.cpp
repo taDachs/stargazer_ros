@@ -49,7 +49,7 @@ void LandmarkLocalizerInterface::landmarkCallback(const stargazer_ros_tool::Land
 
   // Localize
   localizer_->UpdatePose(detected_landmarks, dt);
-  stargazer::pose_t pose = localizer_->getPose();
+  stargazer::Pose pose = localizer_->getPose();
 
   // Publish tf pose
   geometry_msgs::TransformStamped map2camTransform;

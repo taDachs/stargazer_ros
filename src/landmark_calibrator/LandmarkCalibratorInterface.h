@@ -22,7 +22,7 @@ class LandmarkCalibratorInterface {
  private:
   LandmarkCalibratorInterfaceParameters& params_;
   std::unique_ptr<stargazer::LandmarkCalibrator> bundleAdjuster;
-  std::vector<stargazer::pose_t> observed_poses;
+  std::vector<stargazer::Pose> observed_poses;
   std::vector<std::vector<stargazer::ImgLandmark>> observed_landmarks;
   std::vector<ros::Time> observed_timestamps;
   std::string pose_frame;

@@ -14,7 +14,9 @@
 
 // Local Helpers
 #include <tf/transform_datatypes.h>
+
 #include <boost/foreach.hpp>
+
 #include "../StargazerConversionMethods.h"
 #include "../ros_utils.h"
 #include "stargazer/CoordinateTransformations.h"
@@ -51,8 +53,13 @@ ReprojectionVisualizer::ReprojectionVisualizer(ros::NodeHandle node_handle,
   for (auto& el : landmarks) {
     for (auto& pt : el.second.points) {
       double x, y, z;
-      transformLandMarkToWorld(
-          pt[(int)POINT::X], pt[(int)POINT::Y], el.second.pose.data(), &x, &y, &z);
+      transformLandMarkToWorld(pt[(int)POINT::X],
+                               pt[(int)POINT::Y],
+                               el.second.pose.position.data(),
+                               el.second.pose.orientation.data(),
+                               &x,
+                               &y,
+                               &z);
       pt[(int)POINT::X] = x;
       pt[(int)POINT::Y] = y;
       pt[(int)POINT::Z] = z;
