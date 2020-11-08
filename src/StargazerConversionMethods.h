@@ -6,6 +6,7 @@
 #include <ceres/rotation.h>
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/TransformStamped.h>
+
 #include "stargazer/StargazerImgTypes.h"
 #include "stargazer/StargazerTypes.h"
 #include "stargazer_ros_tool/LandmarkArray.h"
@@ -35,13 +36,16 @@ inline stargazer::ImgLandmark convert2ImgLandmark(const stargazer_ros_tool::Land
   stargazer::ImgLandmark lm_out;
   lm_out.nID = lm_in.id;
 
-  lm_out.corners.reserve(lm_in.corner_points.size());
-  for (auto& el : lm_in.corner_points) {
-    cv::Point pt;
-    pt.x = el.u;
-    pt.y = el.v;
-    lm_out.corners.push_back(pt);
-  }
+  // corners
+  std::transform(lm_in.corner_points.begin(),
+                 lm_in.corner_points.end(),
+                 lm_out.corners.begin(),
+                 [](auto& el) {
+                   cv::Point pt;
+                   pt.x = el.u;
+                   pt.y = el.v;
+                   return pt;
+                 });
 
   lm_out.idPoints.reserve(lm_in.id_points.size());
   for (auto& el : lm_in.id_points) {
@@ -77,6 +81,13 @@ inline std::vector<stargazer::ImgLandmark> convert2ImgLandmarks(
   return lms_out;
 }
 
+inline stargazer_ros_tool::LandmarkPoint convert2LandmarkPoint(const cv::Point& pt) {
+  stargazer_ros_tool::LandmarkPoint lmpt;
+  lmpt.u = static_cast<stargazer_ros_tool::LandmarkPoint::_u_type>(pt.x);
+  lmpt.v = static_cast<stargazer_ros_tool::LandmarkPoint::_v_type>(pt.y);
+  return lmpt;
+}
+
 inline stargazer_ros_tool::LandmarkArray convert2LandmarkMsg(
     const std::vector<stargazer::ImgLandmark>& lm_in, std_msgs::Header header = {}) {
 
@@ -89,18 +100,14 @@ inline stargazer_ros_tool::LandmarkArray convert2LandmarkMsg(
     landmark.header = header;
     landmark.id = lm.nID;
 
-    for (auto& pt : lm.corners) {
-      stargazer_ros_tool::LandmarkPoint lmpt;
-      lmpt.u = static_cast<stargazer_ros_tool::LandmarkPoint::_u_type>(pt.x);
-      lmpt.v = static_cast<stargazer_ros_tool::LandmarkPoint::_v_type>(pt.y);
-      landmark.corner_points.push_back(lmpt);
-    }
+    // corners
+    std::transform(lm.corners.begin(),
+                   lm.corners.end(),
+                   landmark.corner_points.begin(),
+                   [](auto& pt) { return convert2LandmarkPoint(pt); });
 
     for (auto& pt : lm.idPoints) {
-      stargazer_ros_tool::LandmarkPoint lmpt;
-      lmpt.u = static_cast<stargazer_ros_tool::LandmarkPoint::_u_type>(pt.x);
-      lmpt.v = static_cast<stargazer_ros_tool::LandmarkPoint::_v_type>(pt.y);
-      landmark.id_points.push_back(lmpt);
+      landmark.id_points.push_back(convert2LandmarkPoint(pt));
     }
 
     landmarksMessage.landmarks.push_back(landmark);
