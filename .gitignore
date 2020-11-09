@@ -1,2 +1,3 @@
 *.bag
+CMakeLists.txt.user
 out/*
