@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>stargazer_ros_tool</name>
+  <version>1.0.0</version>
+  <description>Stargazer ROS 2 interface with message generation and parameter libraries.</description>
+
+  <license>GPLv3</license>
+  <maintainer email="wirges@fzi.de">Sascha Wirges</maintainer>
+  <author email="claudio.bandera@kit.edu">Claudio Bandera</author>
+  <author email="wechtc@gmail.com">Christopher Wecht</author>
+  <url type="repository">https://github.com/KIT-MRT/stargazer_ros.git</url>
+
+  <!-- Build system -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+
+  <!-- Dependencies for message generation -->
+  <depend>builtin_interfaces</depend>
+  <depend>rosidl_default_runtime</depend>
+
+  <!-- Parameter library -->
+  <depend>ament_cmake_ros</depend>
+  <depend>generate_parameter_library</depend>
+
+  <!-- Runtime dependencies -->
+  <depend>cv_bridge</depend>
+  <depend>geometry_msgs</depend>
+  <depend>image_transport</depend>
+  <depend>message_filters</depend>
+  <depend>libceres-dev</depend>
+  <depend>rosbag2</depend>
+  <depend>sensor_msgs</depend>
+  <depend>stargazer</depend>
+  <depend>std_msgs</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <depend>tf2_ros</depend>
+  <depend>visualization_msgs</depend>
+  <depend>yaml-cpp</depend>
+  <depend>stargazer_interfaces</depend>
+
+  <!-- Testing dependencies -->
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_cmake_pytest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <!-- Export -->
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
+

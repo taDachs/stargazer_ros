@@ -1,0 +1,34 @@
+# Point Detection (blob detection)
+landmark_finder:
+  ros__parameters:
+    blob_detection:
+      blob_filter_by_area: False
+      blob_min_area: 0.0
+      blob_max_area: 1000.0
+      blob_filter_by_circularity: True
+      blob_min_circularity: 0.4
+      blob_max_circularity: 1.01
+      blob_filter_by_convexity: False
+      blob_min_convexity: 0.0
+      blob_max_convexity: 1.01
+      blob_filter_by_inertia: False
+      blob_min_inertia_ratio: 0.0
+      blob_max_inertia_ratio: 1.01
+      blob_min_dist_between_blobs: 0.0
+      blob_min_repeatability: 2
+      blob_min_threshold: 200.0
+      blob_max_threshold: 255.0
+      blob_threshold_step: 50.0
+
+    landmark_finder:
+      max_radius_for_cluster: 60. #Maximum radius for clustering marker points to landmarks
+      min_points_per_landmark: 5 #Minimum count of marker points per landmark
+      max_points_per_landmark: 9 #Maximum count of marker points per landmark (depends on grid used)
+
+    corner_detection:
+      fw_length_triangle: 1.0 #weight factor for the circumference of the triangle
+      fw_cross_product: 1.0 #weight factor for the cross product of the secants
+      point_inside_tolerance: 0.1
+      corner_angle_tolerance: 0.5
+      max_corner_hypotheses: 1
+      corner_hypotheses_cutoff: 0.9

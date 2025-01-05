@@ -1,0 +1,172 @@
+landmark_finder:
+  map_config:
+    type: string
+  landmark_topic:
+    type: string
+  undistorted_image_topic:
+    type: string
+
+  landmark_finder:
+    max_radius_for_cluster:
+      type: double
+      description: "Maximum radius for clustering of points to landmarks"
+      default_value: 0
+      validation:
+        bounds<>: [0, 2000]
+    min_points_per_landmark:
+      type: int
+      description: "Minimum count of points per landmark"
+      default_value: 1
+      validation:
+        bounds<>: [1, 100]
+    max_points_per_landmark:
+      type: int
+      description: "Maximum count of points per landmark"
+      default_value: 1
+      validation:
+        bounds<>: [1, 100]
+
+    debug_mode:
+      type: bool
+      description: "Activate debug mode for landmark finder to show results"
+      default_value: False
+
+  # Corner Detection
+  corner_detection:
+    max_corner_hypotheses:
+      type: int
+      description: "Maximum number of corner hypotheses"
+      default_value: 1
+      validation:
+        bounds<>: [1, 10]
+    corner_hypotheses_cutoff:
+      type: double
+      description: "Keep hypotheses as near-best (relativ factor)"
+      default_value: 1.0
+      validation:
+        bounds<>: [0.0, 1.0]
+    fw_length_triangle:
+      type: double
+      description: "Weight factor for the circumference of the triangle"
+      default_value: 1
+      validation:
+        bounds<>: [0, 10]
+    fw_cross_product:
+      type: double
+      description: "Weight factor for the cross product of the secants"
+      default_value: 1
+      validation:
+        bounds<>: [0, 10]
+    corner_angle_tolerance:
+      type: double
+      description: "allow corner angles around half pi"
+      default_value: 1.0
+      validation:
+        bounds<>: [0.0, 1.0]
+    point_inside_tolerance:
+      type: double
+      description: "tolerance for points to be considered inside of secants"
+      default_value: 1.0
+      validation:
+        bounds<>: [0.0, 1.0]
+
+  blob_detection:
+    blob_filter_by_area:
+      type:        bool
+      description: ""
+      default_value: False
+    blob_min_area:
+      type:             double
+      description: ""
+      default_value: 0
+      validation:
+        bounds<>: [0, 1000]
+    blob_max_area:
+      type:             double
+      description: ""
+      default_value: 1000
+      validation:
+        bounds<>: [0, 1000]
+
+    blob_filter_by_circularity:
+      type: bool
+      description: ""
+      default_value: False
+    blob_min_circularity:
+      type:      double
+      description: ""
+      default_value: 0
+      validation:
+        bounds<>: [0, 1.01]
+    blob_max_circularity:
+      type:      double
+      description: ""
+      default_value: 1.01
+      validation:
+        bounds<>: [0, 1.01]
+
+    blob_filter_by_convexity:
+      type:   bool
+      description: ""
+      default_value: False
+    blob_min_convexity:
+      type:        double
+      description: ""
+      default_value: 0
+      validation:
+        bounds<>: [0, 1.01]
+    blob_max_convexity:
+      type:        double
+      description: ""
+      default_value: 1.01
+      validation:
+        bounds<>: [0, 1.01]
+
+    blob_filter_by_inertia:
+      type:     bool
+      description: ""
+      default_value: False
+    blob_min_inertia_ratio:
+      type:     double
+      description: ""
+      default_value: 0
+      validation:
+        bounds<>: [0, 1.01]
+    blob_max_inertia_ratio:
+      type:     double
+      description: ""
+      default_value: 1.01
+      validation:
+        bounds<>: [0, 1.01]
+
+    blob_min_dist_between_blobs:
+      type: double
+      description: ""
+      default_value: 0
+      validation:
+        bounds<>: [0, 1000]
+    blob_min_repeatability:
+      type:    int
+      description: ""
+      default_value: 1
+      validation:
+        bounds<>: [1, 100]
+
+    blob_min_threshold:
+      type:        double
+      description: ""
+      default_value: 0
+      validation:
+        bounds<>: [0, 255]
+    blob_max_threshold:
+      type:        double
+      description: ""
+      default_value: 255
+      validation:
+        bounds<>: [0, 255]
+    blob_threshold_step:
+      type:       double
+      description: ""
+      default_value: 50
+      validation:
+        bounds<>: [1, 255]

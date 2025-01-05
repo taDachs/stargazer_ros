@@ -1,0 +1,19 @@
+landmark_localizer:
+  cam_config:
+    type: string 
+  map_config:
+    type: string 
+  map_frame:
+    type: string 
+  camera_frame:
+    type: string 
+  landmark_topic:
+    type: string 
+  pose_topic:
+    type: string 
+  debug_mode:
+    type: bool 
+  estimate_2d_pose:
+    type: bool 
+    default_value: true
+

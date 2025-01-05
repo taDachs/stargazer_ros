@@ -1,0 +1,20 @@
+landmark_calibrator:
+  constant_intrinsics:
+    type: bool
+    default_value: true
+  cam_cfg_file_in:
+    type: string
+  cam_cfg_file_out:
+    type: string
+  map_cfg_file_in:
+    type: string
+  map_cfg_file_out:
+    type: string
+  bag_file:
+    type: string
+  landmark_topic:
+    type: string
+    default_value: /landmarks_seen
+  pose_topic:
+    type: string
+    default_value: /stargazer/camera_pose

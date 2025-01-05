@@ -1,0 +1,9 @@
+landmark_visualizer:
+  map_config:
+    type: string
+  landmark_topic:
+    type: string
+  map_frame_id:
+    type: string
+  rate:
+    type: double

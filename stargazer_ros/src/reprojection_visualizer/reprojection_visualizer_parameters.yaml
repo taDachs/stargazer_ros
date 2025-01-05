@@ -1,0 +1,15 @@
+reprojection_visualizer:
+  cam_config:
+    type: string 
+  map_config:
+    type: string 
+  bag_file:
+    type: string 
+  landmark_topic:
+    type: string 
+  img_topic:
+    type: string 
+  pose_topic:
+    type: string 
+  wait_time:
+    type: int 
